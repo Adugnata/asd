@@ -14,4 +14,5 @@ public class AccountEntry {
     private String description;
     private String fromAccountNumber;
     private String fromPersonName;
+
 }

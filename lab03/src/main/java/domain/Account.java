@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -29,12 +30,12 @@ public class Account {
     }
 
     public void deposit(double amount) {
-        AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
+        AccountEntry entry = new AccountEntry(new Date(),amount, "deposit", "", "");
         entryList.add(entry);
     }
 
     public void withdraw(double amount) {
-        AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
+        AccountEntry entry = new AccountEntry(new Date(),-amount, "withdraw", "", "");
         entryList.add(entry);
     }
 
@@ -43,9 +44,9 @@ public class Account {
     }
 
     public void transferFunds(Account toAccount, double amount, String description) {
-        entryList.add(new AccountEntry(-amount, description, toAccount.getAccountNumber(),
+        entryList.add(new AccountEntry(new Date(),-amount, description, toAccount.getAccountNumber(),
                 toAccount.getCustomer().getName()));
-        toAccount.addEntry(new AccountEntry(amount, description, toAccount.getAccountNumber(),
+        toAccount.addEntry(new AccountEntry(new Date(),amount, description, toAccount.getAccountNumber(),
                 toAccount.getCustomer().getName()));
     }
 

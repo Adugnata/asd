@@ -9,7 +9,7 @@ public class Application {
 
         // create 2 accounts;
         accountService.createAccount("1263862", "Frank Brown",new P1(new InterestChecking()));
-        accountService.createAccount("4253892", "John Doe",new P2(new InterestSaving()));
+        accountService.createAccount("4253892", "John Doe",new P3(new InterestSaving()));
         // use account 1;
         accountService.deposit("1263862", 240);
         accountService.deposit("1263862", 529);

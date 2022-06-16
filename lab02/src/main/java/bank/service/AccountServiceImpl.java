@@ -1,37 +1,30 @@
 package bank.service;
 
-import java.util.Collection;
-
-import sms.SMSSender;
-import email.EmailSender;
-
-import logging.Logger;
-
-import bank.dao.AccountDAOImpl;
 import bank.dao.AccountDAO;
+import bank.dao.AccountDAOImpl;
 import bank.domain.Account;
 import bank.domain.Customer;
+import email.EmailSender;
+import logging.Logger;
+import sms.SMSSender;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class AccountServiceImpl implements AccountService {
     private AccountDAO accountDAO;
-    private Logger logger;
-    private EmailSender emailsender;
-    private SMSSender smssender;
-
+    private ArrayList<Observer> observers = new ArrayList<>();
     public AccountServiceImpl() {
         accountDAO = new AccountDAOImpl();
-        logger = new Logger();
-        emailsender = new EmailSender();
-        smssender = new SMSSender();
+        observers.addAll(List.of(new Logger(),new EmailSender(),new SMSSender()));
     }
 
     public Account createAccount(long accountNumber, String customerName) {
         Account account = new Account(accountNumber);
         Customer customer = new Customer(customerName);
         account.setCustomer(customer);
-        account.addObserver(logger);
-        account.addObserver(emailsender);
-        account.addObserver(smssender);
+        observers.forEach(account::addObserver);
         account.NotifyObserver(account);
 
         accountDAO.saveAccount(account);
